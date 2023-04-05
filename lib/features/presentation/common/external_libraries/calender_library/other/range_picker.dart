@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:ceylife_digital/features/presentation/common/external_libraries/calender_library/other/date_period.dart';
+import 'package:ceylife_digital/features/presentation/common/external_libraries/calender_library/other/date_picker_keys.dart';
+import 'package:ceylife_digital/features/presentation/common/external_libraries/calender_library/other/date_picker_styles.dart';
+import 'package:ceylife_digital/features/presentation/common/external_libraries/calender_library/other/day_based_changable_picker.dart';
+import 'package:ceylife_digital/features/presentation/common/external_libraries/calender_library/other/event_decoration.dart';
+import 'package:ceylife_digital/features/presentation/common/external_libraries/calender_library/other/i_selectable_picker.dart';
+import 'package:ceylife_digital/features/presentation/common/external_libraries/calender_library/other/layout_settings.dart';
+import 'package:ceylife_digital/features/presentation/common/external_libraries/calender_library/other/typedefs.dart';
+
+
+// Styles for current displayed period: Theme.of(context).textTheme.subhead
+//
+// Styles for date picker cell:
+// current date: Theme.of(context).textTheme.body2.copyWith(color: themeData.accentColor)
+// if date disabled: Theme.of(context).textTheme.body1.copyWith(color: themeData.disabledColor)
+// if date selected:
+//  text - Theme.of(context).accentTextTheme.body2
+//  for box decoration - color is Theme.of(context).accentColor and box shape is circle
+
+// selectedPeriod must be between firstDate and lastDate
+
+/// Date picker for range selection.
+class RangePicker extends StatelessWidget {
+  /// Creates a month picker.
+  RangePicker(
+      {Key key,
+      @required this.selectedPeriod,
+      @required this.onChanged,
+      @required this.firstDate,
+      @required this.lastDate,
+      this.datePickerLayoutSettings = const DatePickerLayoutSettings(),
+      this.datePickerStyles = const DatePickerRangeStyles(),
+      this.datePickerKeys,
+      this.selectableDayPredicate,
+        this.onSelectionError,
+        this.eventDecorationBuilder})
+      : assert(selectedPeriod != null),
+        assert(onChanged != null),
+        assert(!firstDate.isAfter(lastDate)),
+        assert(!lastDate.isBefore(firstDate)),
+        assert(!selectedPeriod.start.isBefore(firstDate)),
+        assert(!selectedPeriod.end.isAfter(lastDate)),
+        super(key: key);
+
+  /// The currently selected period.
+  ///
+  /// This date is highlighted in the picker.
+  final DatePeriod selectedPeriod;
+
+  /// Called when the user picks a week.
+  final ValueChanged<DatePeriod> onChanged;
+
+  /// Called when the error was thrown after user selection.
+  /// (e.g. when user selected a range with one or more days what can't be selected)
+  final OnSelectionError onSelectionError;
+
+  /// The earliest date the user is permitted to pick.
+  final DateTime firstDate;
+
+  /// The latest date the user is permitted to pick.
+  final DateTime lastDate;
+
+  /// Layout settings what can be customized by user
+  final DatePickerLayoutSettings datePickerLayoutSettings;
+
+  /// Some keys useful for integration tests
+  final DatePickerKeys datePickerKeys;
+
+  /// Styles what can be customized by user
+  final DatePickerRangeStyles datePickerStyles;
+
+  /// Function returns if day can be selected or not.
+  final SelectableDayPredicate selectableDayPredicate;
+
+  /// Builder to get event decoration for each date.
+  ///
+  /// All event styles are overriden by selected styles
+  /// except days with dayType is [DayType.notSelected].
+  final EventDecorationBuilder eventDecorationBuilder;
+
+  @override
+  Widget build(BuildContext context){
+
+    ISelectablePicker<DatePeriod> rangeSelectablePicker = RangeSelectable(
+        selectedPeriod,
+        firstDate,
+        lastDate,
+        selectableDayPredicate: selectableDayPredicate
+    );
+
+    return DayBasedChangeablePicker<DatePeriod>(
+      selectablePicker: rangeSelectablePicker,
+      selectedDate: selectedPeriod.start,
+      firstDate: firstDate,
+      lastDate: lastDate,
+      onChanged: onChanged,
+      onSelectionError: onSelectionError,
+      datePickerLayoutSettings: datePickerLayoutSettings,
+      datePickerStyles: datePickerStyles,
+      datePickerKeys: datePickerKeys,
+      eventDecorationBuilder: eventDecorationBuilder,
+    );
+  }
+}

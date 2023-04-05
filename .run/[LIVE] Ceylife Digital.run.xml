@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="[LIVE] Ceylife Digital" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="buildFlavor" value="live" />
+    <option name="filePath" value="$PROJECT_DIR$/lib/flavors/main_live.dart" />
+    <method v="2" />
+  </configuration>
+</component>

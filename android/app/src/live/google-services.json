@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "490349080657",
+    "project_id": "ceylife-digital-live",
+    "storage_bucket": "ceylife-digital-live.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490349080657:android:afa0173d3fe344f3804870",
+        "android_client_info": {
+          "package_name": "com.ceylincolife.ceylifeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "490349080657-sdmqhk3id9lgm83c2h9mrfpe7qc1be62.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMupjqxQWZSoq828DJrOHeouYi82aga88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "490349080657-sdmqhk3id9lgm83c2h9mrfpe7qc1be62.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "490349080657-k85cplk8pn7f77mbs8p5glq40en1qat9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ceylincolife.ceylifeapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
